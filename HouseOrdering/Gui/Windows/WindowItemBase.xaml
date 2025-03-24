@@ -1,0 +1,50 @@
+﻿<Window x:Class="HouseOrdering.Gui.Windows.WindowItemBase"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HouseOrdering.Gui.Windows"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        Title="Edit item">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="800"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Grid.Column="0" x:Name="btnAddPoint" Content="Add point" Margin="5" Click="btnAddPoint_Click"/>
+        <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500" Width="300">
+            <StackPanel Grid.Row="1" Grid.Column="0" x:Name="pnlPoints" />
+        </ScrollViewer>
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="R"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="G"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="B"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="A"/>
+            <Slider Grid.Row="0" Grid.Column="1" x:Name="sliderR" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1" ValueChanged="Slider_ValueChanged"/>
+            <Slider Grid.Row="1" Grid.Column="1" x:Name="sliderG" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1" ValueChanged="Slider_ValueChanged"/>
+            <Slider Grid.Row="2" Grid.Column="1" x:Name="sliderB" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1" ValueChanged="Slider_ValueChanged"/>
+            <Slider Grid.Row="3" Grid.Column="1" x:Name="sliderA" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1" ValueChanged="Slider_ValueChanged"/>
+        </Grid>
+
+        <DockPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Margin="5">
+            <Canvas x:Name="canItem" />
+        </DockPanel>
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Height="30" Background="#D3D3D3">
+            <Button x:Name="btnOk" Content="OK" Margin="5" Width="100" HorizontalAlignment="Right" Click="btnOk_Click"/>
+        </StackPanel>
+        
+    </Grid>
+</Window>

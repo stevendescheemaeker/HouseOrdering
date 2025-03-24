@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="HouseOrdering.Gui.UserControls.UserControlPolygonePoint"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HouseOrdering.Gui.UserControls">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBox Grid.Column="0" Grid.RowSpan="2" Name="tbLength" Width="100" Margin="5" PreviewTextInput="tbLength_PreviewTextInput" TextChanged="tbLength_TextChanged"/>
+        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
+            <Border x:Name="borderLeft" BorderThickness="0" Background="White" MouseDown="border_MouseDown" Width="15" Height="15" Margin="2">
+                <TextBlock TextAlignment="Center">←</TextBlock>
+            </Border>
+            <Border x:Name="borderLeftUp" BorderThickness="0" Background="White" MouseDown="border_MouseDown" Width="15" Height="15" Margin="2">
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="45" CenterX="5" CenterY="5"/>
+                    </TextBlock.LayoutTransform>
+                    ←
+                </TextBlock>
+            </Border>
+            <Border x:Name="borderUp" BorderThickness="0" Background="White" MouseDown="border_MouseDown" Width="15" Height="15" Margin="2">
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90" CenterX="5" CenterY="5"/>
+                    </TextBlock.LayoutTransform>
+                    ←
+                </TextBlock>
+            </Border>
+            <Border x:Name="borderUpRight" BorderThickness="0" Background="White" MouseDown="border_MouseDown" Width="15" Height="15" Margin="2">
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="135" CenterX="5" CenterY="5"/>
+                    </TextBlock.LayoutTransform>
+                    ←
+                </TextBlock>
+            </Border>
+            <Border x:Name="borderRight" BorderThickness="0" Background="White" MouseDown="border_MouseDown" Width="15" Height="15" Margin="2">
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="180" CenterX="5" CenterY="5"/>
+                    </TextBlock.LayoutTransform>
+                    ←
+                </TextBlock>
+            </Border>
+            <Border x:Name="borderRightDown" BorderThickness="0" Background="White" MouseDown="border_MouseDown" Width="15" Height="15" Margin="2">
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="225" CenterX="5" CenterY="5"/>
+                    </TextBlock.LayoutTransform>
+                    ←
+                </TextBlock>
+            </Border>
+            <Border x:Name="borderDown" BorderThickness="0" Background="White" MouseDown="border_MouseDown" Width="15" Height="15" Margin="2">
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="270" CenterX="5" CenterY="5"/>
+                    </TextBlock.LayoutTransform>
+                    ←
+                </TextBlock>
+            </Border>
+            <Border x:Name="borderDownLeft" BorderThickness="0" Background="White" MouseDown="border_MouseDown" Width="15" Height="15" Margin="2">
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="315" CenterX="5" CenterY="5"/>
+                    </TextBlock.LayoutTransform>
+                    ←
+                </TextBlock>
+            </Border>
+        </StackPanel>
+        <Button Grid.Column="2" x:Name="btnRemove" Grid.RowSpan="2" Height="20" Margin="5,0,0,0" Background="Tomato" BorderBrush="Black" Click="btnRemove_Click">
+            <TextBlock Text="X"/>
+        </Button>
+    </Grid>
+</UserControl>

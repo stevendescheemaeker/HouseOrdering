@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+	<TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Icons\house.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Icons\house.ico" />
+    <None Remove="Icons\house.png" />
+    <None Remove="Icons\newproject.ico" />
+    <None Remove="Icons\open.ico" />
+    <None Remove="Icons\print.ico" />
+    <None Remove="Icons\remove.ico" />
+    <None Remove="Icons\save.ico" />
+    <None Remove="Icons\wheel.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\house.ico" />
+    <Resource Include="Icons\newproject.ico" />
+    <Resource Include="Icons\open.ico" />
+    <Resource Include="Icons\print.ico" />
+    <Resource Include="Icons\remove.ico" />
+    <Resource Include="Icons\save.ico" />
+    <Resource Include="Icons\wheel.png" />
+  </ItemGroup>
+
+</Project>
