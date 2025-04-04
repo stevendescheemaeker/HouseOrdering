@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using HouseOrdering.Data;
 using HouseOrdering.Gui.Windows;
 
@@ -23,33 +24,34 @@ namespace HouseOrdering.Gui.UserControls
             DrawFloor();
         }
 
-        public void OnClosing()
-        {
-            canFloor.Children.Clear();
-        }
-
         void DrawFloor()
         {
             canFloor.Children.Clear();
 
             /* plan */
 
-            canFloor.Children.Add(mPlan.Floor.DrawItem);
+            Image floor = new Image();
+            floor.Source = Utilities.Utilities.GetImage(mPlan.Floor.Image);
+            RenderOptions.SetBitmapScalingMode(floor, BitmapScalingMode.HighQuality);
+            canFloor.Children.Add(floor);
 
             /* items */
 
-            foreach (FloorItem item in mPlan.Items)
+            foreach (ItemBase item in mPlan.Items)
             {
-                canFloor.Children.Add(item.DrawItem);
-
-                Canvas.SetLeft(item.DrawItem, item.X);
-                Canvas.SetTop(item.DrawItem, item.Y);
+                Image itemImage = new Image();
+                itemImage.ToolTip = item.Name;
+                itemImage.Source = Utilities.Utilities.GetImage(item.Image);
+                itemImage.Tag = item;
+                canFloor.Children.Add(itemImage);
+                Canvas.SetLeft(itemImage, item.X);
+                Canvas.SetTop(itemImage, item.Y);
             }
         }
 
         void canFloor_MouseMove(object sender, MouseEventArgs e)
         {
-            FloorItem dragging = mPlan.Items.FirstOrDefault(f => f.Dragging);
+            ItemBase dragging = mPlan.Items.FirstOrDefault(f => f.Dragging);
             if (dragging != null)
             {
                 int eX = (int)e.GetPosition(canFloor).X;
@@ -62,28 +64,61 @@ namespace HouseOrdering.Gui.UserControls
                 dragging.X = eX;
                 dragging.Y = eY;
 
-                Canvas.SetLeft(dragging.DrawItem, dragging.X);
-                Canvas.SetTop(dragging.DrawItem, dragging.Y);
+                foreach (Image image in canFloor.Children)
+                {
+                    if (image.Tag != null)
+                    {
+                        if ((image.Tag as ItemBase).Dragging)
+                        {
+                            Canvas.SetLeft(image, dragging.X);
+                            Canvas.SetTop(image, dragging.Y);
+                            break;
+                        }
+                    }
+                }
             }
         }
 
         void canFloor_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            ItemBase item = null;
             Point newPoint = new Point((float)(e.GetPosition(canFloor).X), (float)(e.GetPosition(canFloor).Y));
-            FloorItem item = mPlan.Items.FirstOrDefault(it => canFloor.InputHitTest(e.GetPosition(canFloor)).Equals(it.DrawItem));
+
+            foreach (Image image in canFloor.Children)
+            {
+                if (image.Tag != null)
+                {
+                    if (canFloor.InputHitTest(e.GetPosition(canFloor)).Equals(image))
+                    {
+                        item = image.Tag as ItemBase;
+                        break;
+                    }
+                }
+            }
+
             if (item != null)
             {
                 if (e.ClickCount == 2)
                 {
                     canFloor.Children.Clear();
 
-                    WindowItemBase windowItemBase = new WindowItemBase(item);
-                    windowItemBase.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                    windowItemBase.ShowDialog();
+                    if (item as ItemBasePolygon != null)
+                    {
+                        WindowItemBasePolygon windowItemBase = new WindowItemBasePolygon(item as ItemBasePolygon);
+                        windowItemBase.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                        windowItemBase.ShowDialog();
+                    }
+
+                    if (item as ItemBaseCircle != null)
+                    {
+                        WindowItemBaseCircle windowItemBase = new WindowItemBaseCircle(item as ItemBaseCircle);
+                        windowItemBase.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                        windowItemBase.ShowDialog();
+                    }
 
                     DrawFloor();
                 }
-                else
+                else if (!item.Locked)
                 {
                     item.Dragging = true;
                 }
@@ -92,9 +127,47 @@ namespace HouseOrdering.Gui.UserControls
             canFloor.CaptureMouse();
         }
 
+        void canFloor_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ItemBase item = null;
+            Image img = null;
+            Point newPoint = new Point((float)(e.GetPosition(canFloor).X), (float)(e.GetPosition(canFloor).Y));
+
+            foreach (Image image in canFloor.Children)
+            {
+                if (image.Tag != null)
+                {
+                    if (canFloor.InputHitTest(e.GetPosition(canFloor)).Equals(image))
+                    {
+                        item = image.Tag as ItemBase;
+                        img = image;
+                       
+                        break;
+                    }
+                }
+            }
+
+            if (item != null)
+            {
+                if (e.ClickCount == 2)
+                {
+                    if (MessageBox.Show(string.Format("You want to remove {0}?", item.Name), "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.OK)
+                    {
+                        mPlan.Items.Remove(item);
+                        canFloor.Children.Remove(img);
+                    }
+                }
+                else
+                {
+                    item.Locked = !item.Locked;
+                    img.Source = Utilities.Utilities.GetImage(item.Image);
+                }
+            }
+        }
+
         void canFloor_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            FloorItem item = mPlan.Items.FirstOrDefault(fi => fi.Dragging);
+            ItemBase item = mPlan.Items.FirstOrDefault(fi => fi.Dragging);
             if (item != null)
             {
                 item.Dragging = false;
@@ -103,16 +176,30 @@ namespace HouseOrdering.Gui.UserControls
             canFloor.ReleaseMouseCapture();
         }
 
-        void addItem_Click(object sender, RoutedEventArgs e)
+        void addPolygon_Click(object sender, RoutedEventArgs e)
         {
-            FloorItem item = new FloorItem();
+            ItemBasePolygon item = new ItemBasePolygon();
             mPlan.Items.Add(item);
 
-            WindowItemBase windowItemBase = new WindowItemBase(item);
+            WindowItemBasePolygon windowItemBase = new WindowItemBasePolygon(item);
             windowItemBase.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             windowItemBase.ShowDialog();
 
             DrawFloor();
         }
+
+        void addCircle_Click(object sender, RoutedEventArgs e)
+        {
+            ItemBaseCircle item = new ItemBaseCircle();
+            mPlan.Items.Add(item);
+
+            WindowItemBaseCircle windowItemBase = new WindowItemBaseCircle(item);
+            windowItemBase.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            windowItemBase.ShowDialog();
+
+            DrawFloor();
+        }
+
+
     }
 }

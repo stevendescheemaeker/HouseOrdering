@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Drawing;
 using System.Windows;
-using System.Windows.Media;
+using System.Windows.Controls;
 using HouseOrdering.Data;
 using HouseOrdering.Gui.UserControls;
 
@@ -9,38 +9,30 @@ namespace HouseOrdering.Gui.Windows
     /// <summary>
     /// Interaction logic for WindowItemBase.xaml
     /// </summary>
-    public partial class WindowItemBase : Window
+    public partial class WindowItemBasePolygon : Window
     {
-        ItemBase mItem;
+        ItemBasePolygon mItem;
 
-        public WindowItemBase(ItemBase item)
+        public WindowItemBasePolygon(ItemBasePolygon item)
         {
             InitializeComponent();
 
             mItem = item;
+
+            tbName.Text = item.Name;
 
             sliderR.Value = mItem.BackGround.R;
             sliderG.Value = mItem.BackGround.G;
             sliderB.Value = mItem.BackGround.B;
             sliderA.Value = mItem.BackGround.A;
 
-
             DrawItem();
             SetPoints();
-
-            this.Closing += WindowItemBase_Closing;
         }
-
-        private void WindowItemBase_Closing(object sender, CancelEventArgs e)
-        {
-            canItem.Children.Clear();
-        }
-
 
         void DrawItem()
         {
-            canItem.Children.Clear();
-            canItem.Children.Add(mItem.DrawItem);
+            imgPreview.Source = Utilities.Utilities.GetImage(mItem.Image);
         }
 
         void RemoveItem(PointDirection direction)
@@ -59,9 +51,15 @@ namespace HouseOrdering.Gui.Windows
             }
         }
 
+        void tbName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            mItem.Name = tbName.Text;
+        }
+
         void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             mItem.BackGround = Color.FromArgb((byte)sliderA.Value, (byte)sliderR.Value, (byte)sliderG.Value, (byte)sliderB.Value);
+            DrawItem();
         }
 
         void btnAddPoint_Click(object sender, RoutedEventArgs e)

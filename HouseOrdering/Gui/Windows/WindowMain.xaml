@@ -49,13 +49,13 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" x:Name="tbProjectName" Height="30" TextAlignment="Center" MouseDown="tbProjectName_MouseDown" MouseEnter="tbProjectName_MouseEnter" MouseLeave="tbProjectName_MouseLeave"/>
+            <TextBlock Grid.Row="0" x:Name="tbProjectName"  VerticalAlignment="Center" MouseDown="tbProjectName_MouseDown" MouseEnter="tbProjectName_MouseEnter" MouseLeave="tbProjectName_MouseLeave"/>
             <ListBox Grid.Row="1" x:Name="lbFloors" Margin="0,5" SelectionChanged="lbFloors_SelectionChanged">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Path=Name}" Margin="10" Width="150" TextWrapping="WrapWithOverflow"/>
-                            <Button Margin="5" Width="20" Height="20" Click="FloorRename_Click">
+                            <TextBlock Text="{Binding Path=Floor.Name}" Margin="10" Width="150" TextWrapping="WrapWithOverflow"/>
+                            <Button Margin="5" Width="20" Height="20" Click="FloorEdit_Click">
                                 <StackPanel>
                                     <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Icons/wheel.png" />
                                 </StackPanel>

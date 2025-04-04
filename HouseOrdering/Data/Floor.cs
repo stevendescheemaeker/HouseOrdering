@@ -3,12 +3,12 @@
 namespace HouseOrdering.Data
 {
     [Serializable]
-    public class Floor : ItemBase
+    public class Floor : ItemBasePolygon
     {
         public Floor()
             : base()
         {
-            
+            Locked = true;
         }
     }
 }

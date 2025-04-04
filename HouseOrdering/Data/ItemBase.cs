@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Shapes;
+using System.Drawing;
 
 namespace HouseOrdering.Data
 {
@@ -11,113 +8,25 @@ namespace HouseOrdering.Data
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public bool Locked { get; set; }
+        public bool Dragging { get; set; }
 
-        public Color BackGround
-        {
-            get
-            {
-                return (mPolygon.Fill as SolidColorBrush).Color;
-            }
-            set
-            {
-                mPolygon.Fill = new SolidColorBrush(value);
-            }
-        }
+        public String Name { get; set; }
 
-        public Polygon DrawItem
-        {
-            get
-            {
-                int index = 0;
-                double length;
-                PointCollection points = new PointCollection();
-                points.Add(new Point(0, 0));
+        public abstract Image Image { get; }
 
-                foreach (PointDirection pointDirection in Directions)
-                {
-                    Point point = new Point(0, 0);
-
-                    switch (pointDirection.Direction)
-                    {
-                        case Direction.LEFT:
-
-                            point.X = points[index].X - pointDirection.Length;
-                            point.Y = points[index].Y;
-                            break;
-
-                        case Direction.LEFT_UP:
-
-                            length = Math.Sqrt((Math.Pow(pointDirection.Length, 2) / 2));
-                            point.X = points[index].X - length;
-                            point.Y = points[index].Y - length;
-                            break;
-
-                        case Direction.UP:
-
-                            point.X = points[index].X;
-                            point.Y = points[index].Y - pointDirection.Length;
-                            break;
-
-                        case Direction.UP_RIGHT:
-
-                            length = Math.Sqrt((Math.Pow(pointDirection.Length, 2) / 2));
-                            point.X = points[index].X + length;
-                            point.Y = points[index].Y - length;
-                            break;
-
-                        case Direction.RIGHT:
-
-                            point.X = points[index].X + pointDirection.Length;
-                            point.Y = points[index].Y;
-                            break;
-
-                        case Direction.RIGHT_DOWN:
-
-                            length = Math.Sqrt((Math.Pow(pointDirection.Length, 2) / 2));
-                            point.X = points[index].X + length;
-                            point.Y = points[index].Y + length;
-                            break;
-
-                        case Direction.DOWN:
-
-                            point.X = points[index].X;
-                            point.Y = points[index].Y + pointDirection.Length;
-                            break;
-
-                        case Direction.DOWN_LEFT:
-
-                            length = Math.Sqrt((Math.Pow(pointDirection.Length, 2) / 2));
-                            point.X = points[index].X - length;
-                            point.Y = points[index].Y + length;
-                            break;
-                    }
-
-                    points.Add(point);
-                    index++;
-                }
-
-                mPolygon.Points = points;
-
-                return mPolygon;
-            }
-        }
-
-        public List<PointDirection> Directions { get; private set; }
-
-        protected Polygon mPolygon;
+        public Color BackGround { get; set; }
 
         protected ItemBase()
         {
             X = 0;
             Y = 0;
 
-            Directions = new List<PointDirection>();
+            Locked = false;
+            Dragging = false;
 
-            mPolygon = new Polygon();
-            mPolygon.Stroke = new SolidColorBrush(Colors.Gray);
-            mPolygon.StrokeThickness = 1;
-
-            BackGround = Colors.LawnGreen;
+            Name = "<unknown>";
+            BackGround = Color.LightBlue;
         }
     }
 }

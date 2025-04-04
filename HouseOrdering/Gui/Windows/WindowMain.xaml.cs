@@ -1,16 +1,11 @@
-﻿using System.Text;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using HouseOrdering.Data;
 using HouseOrdering.Gui.UserControls;
-using HouseOrdering.Gui.Windows;
+using Microsoft.Win32;
 
 namespace HouseOrdering.Gui.Windows
 {
@@ -44,12 +39,37 @@ namespace HouseOrdering.Gui.Windows
 
         void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            if (mProject != null)
+            {
+                SaveFileDialog save = new SaveFileDialog();
+                save.Filter = String.Format("{0} (*.{1})|*.{1}", "HouseOrdening file", "ho");
 
+                if (save.ShowDialog() == true)
+                {
+                    if (!Utilities.Utilities.SaveObjectToFile<Project>(save.FileName, mProject))
+                    {
+                        MessageBox.Show("Opslaan mislukt", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
         }
 
         void btnOpen_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = String.Format("{0} (*.{1})|*.{1}", "HouseOrdening file", "ho");
 
+            if (open.ShowDialog() == true)
+            {
+                if (Utilities.Utilities.GetObjectFromFile<Project>(open.FileName, out Project output))
+                {
+                    OpenProject(output);
+                }
+                else
+                {
+                    MessageBox.Show("Openen mislukt", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         void tbProjectName_MouseDown(object sender, MouseButtonEventArgs e)
@@ -80,11 +100,6 @@ namespace HouseOrdering.Gui.Windows
 
         void lbFloors_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (pnlFloor.Children.Count == 1)
-            {
-                (pnlFloor.Children[0] as UserControlFloorPlan).OnClosing();
-            }
-
             pnlFloor.Children.Clear();
 
             if (lbFloors.SelectedItem != null)
@@ -94,18 +109,17 @@ namespace HouseOrdering.Gui.Windows
             }
         }
 
-        void FloorRename_Click(object sender, RoutedEventArgs e)
+        void FloorEdit_Click(object sender, RoutedEventArgs e)
         {
             FloorPlan plan = (sender as Button).DataContext as FloorPlan;
             if (plan != null)
             {
-                WindowRename windowRename = new WindowRename(plan.Name);
-                windowRename.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                windowRename.ShowDialog();
+                WindowItemBasePolygon windowEdit = new WindowItemBasePolygon(plan.Floor);
+                windowEdit.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                windowEdit.ShowDialog();
 
-                if (windowRename.DialogResult == true)
+                if (windowEdit.DialogResult == true)
                 {
-                    plan.Name = windowRename.Text;
                     lbFloors.Items.Refresh();
                 }
             }
@@ -131,7 +145,7 @@ namespace HouseOrdering.Gui.Windows
                 floorPlan.Floor = floor;
                 mProject.Plans.Add(floorPlan);
 
-                WindowItemBase plan = new WindowItemBase(floor);
+                WindowItemBasePolygon plan = new WindowItemBasePolygon(floor);
                 plan.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 plan.ShowDialog();
 

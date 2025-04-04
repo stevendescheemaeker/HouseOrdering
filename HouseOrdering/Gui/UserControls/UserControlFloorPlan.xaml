@@ -11,9 +11,10 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <Canvas Grid.Row="0" x:Name="canFloor" Background="White" MouseMove="canFloor_MouseMove" PreviewMouseLeftButtonDown="canFloor_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="canFloor_PreviewMouseLeftButtonUp"/>
+        <Canvas Grid.Row="0" x:Name="canFloor" Background="White" MouseMove="canFloor_MouseMove" PreviewMouseLeftButtonDown="canFloor_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="canFloor_PreviewMouseLeftButtonUp" PreviewMouseRightButtonDown="canFloor_PreviewMouseRightButtonDown"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Background="#D3D3D3">
-            <Button x:Name="addItem" Content="Add item" Click="addItem_Click" Margin="5"/>
+            <Button x:Name="addPolygon" Content="Add polygon" Click="addPolygon_Click" Margin="5"/>
+            <Button x:Name="addCircle" Content="Add circle" Click="addCircle_Click" Margin="5"/>
         </StackPanel>
     </Grid>
 </UserControl>
