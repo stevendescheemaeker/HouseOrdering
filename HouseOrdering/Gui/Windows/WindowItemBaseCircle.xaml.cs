@@ -29,6 +29,11 @@ namespace HouseOrdering.Gui.Windows
             sliderB.Value = mItem.BackGround.B;
             sliderA.Value = mItem.BackGround.A;
 
+            sliderR.ValueChanged += Slider_ValueChanged;
+            sliderG.ValueChanged += Slider_ValueChanged;
+            sliderB.ValueChanged += Slider_ValueChanged;
+            sliderA.ValueChanged += Slider_ValueChanged;
+
             DrawItem();
         }
 

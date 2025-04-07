@@ -9,16 +9,64 @@ namespace HouseOrdering.Data
     [Serializable]
     public class ItemBasePolygon : ItemBase
     {
-
         public List<PointDirection> Directions { get; private set; }
 
         public override Image Image
         {
             get
             {
+                Polygon polygon = Polygon;
+                System.Windows.Media.PointCollection points = Points;
+
+                polygon.Measure(new System.Windows.Size(double.PositiveInfinity, double.PositiveInfinity));
+
+                if (polygon.DesiredSize.Width < 1 || polygon.DesiredSize.Height < 1)
+                {
+                    return null;
+                }
+
+                PointF[] drawPoints = new PointF[points.Count];
+                                            
+                for (int i = 0; i < points.Count; i++)
+                {
+                    drawPoints[i] = new PointF((float)points[i].X, (float)points[i].Y);
+                }
+
+                Bitmap bitmap = new Bitmap((int)polygon.DesiredSize.Width, (int)polygon.DesiredSize.Height);
+                using (Graphics gr = Graphics.FromImage(bitmap))
+                {
+                    gr.SmoothingMode = SmoothingMode.HighQuality;
+                    gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    gr.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    gr.FillPolygon(new SolidBrush(BackGround), drawPoints);
+                    gr.DrawPolygon(new Pen(Locked ? Brushes.Gray : Brushes.LightGreen, 2), drawPoints);
+                }
+
+                return bitmap;
+            }
+        }
+
+        Polygon Polygon
+        {
+            get
+            {
+                Polygon polygon = new Polygon();
+
+                polygon.Points = Points;
+                polygon.Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(BackGround.A, BackGround.R, BackGround.G, BackGround.B));
+                polygon.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Gray);
+                polygon.StrokeThickness = 1;
+
+                return polygon;
+            }
+        }
+
+        System.Windows.Media.PointCollection Points
+        {
+            get
+            {
                 double length;
                 int index = 0;
-                Polygon polygon = new Polygon();
                 System.Windows.Media.PointCollection points = new System.Windows.Media.PointCollection();
                 points.Add(new System.Windows.Point(0, 0));
                 foreach (PointDirection pointDirection in Directions)
@@ -84,36 +132,7 @@ namespace HouseOrdering.Data
                     index++;
                 }
 
-                polygon.Points = points;
-                polygon.Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(BackGround.A, BackGround.R, BackGround.G, BackGround.B));
-                polygon.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Gray);
-                polygon.StrokeThickness = 1;
-
-                polygon.Measure(new System.Windows.Size(double.PositiveInfinity, double.PositiveInfinity));
-
-                if (polygon.DesiredSize.Width < 1 || polygon.DesiredSize.Height < 1)
-                {
-                    return null;
-                }
-
-                PointF[] drawPoints = new PointF[points.Count];
-                                            
-                for (int i = 0; i < points.Count; i++)
-                {
-                    drawPoints[i] = new PointF((float)points[i].X, (float)points[i].Y);
-                }
-
-                Bitmap bitmap = new Bitmap((int)polygon.DesiredSize.Width, (int)polygon.DesiredSize.Height);
-                using (Graphics gr = Graphics.FromImage(bitmap))
-                {
-                    gr.SmoothingMode = SmoothingMode.HighQuality;
-                    gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    gr.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                    gr.FillPolygon(new SolidBrush(BackGround), drawPoints);
-                    gr.DrawPolygon(new Pen(Locked ? Brushes.Gray : Brushes.LightGreen, 2), drawPoints);
-                }
-
-                return bitmap;
+                return points;
             }
         }
 

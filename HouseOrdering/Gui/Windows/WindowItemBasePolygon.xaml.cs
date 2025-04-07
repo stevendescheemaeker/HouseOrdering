@@ -1,6 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using HouseOrdering.Data;
 using HouseOrdering.Gui.UserControls;
 
@@ -20,11 +23,17 @@ namespace HouseOrdering.Gui.Windows
             mItem = item;
 
             tbName.Text = item.Name;
+            tbAngle.Text = item.RotateAngle.ToString();
 
             sliderR.Value = mItem.BackGround.R;
             sliderG.Value = mItem.BackGround.G;
             sliderB.Value = mItem.BackGround.B;
             sliderA.Value = mItem.BackGround.A;
+
+            sliderR.ValueChanged += Slider_ValueChanged;
+            sliderG.ValueChanged += Slider_ValueChanged;
+            sliderB.ValueChanged += Slider_ValueChanged;
+            sliderA.ValueChanged += Slider_ValueChanged;
 
             DrawItem();
             SetPoints();
@@ -54,6 +63,21 @@ namespace HouseOrdering.Gui.Windows
         void tbName_TextChanged(object sender, TextChangedEventArgs e)
         {
             mItem.Name = tbName.Text;
+        }
+
+        void tbAngle_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        void tbAngle_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Int32.TryParse(tbAngle.Text, out int result))
+            {
+                mItem.RotateAngle = result;
+                SetPoints();
+            }
         }
 
         void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

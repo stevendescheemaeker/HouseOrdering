@@ -46,6 +46,9 @@ namespace HouseOrdering.Gui.UserControls
                 canFloor.Children.Add(itemImage);
                 Canvas.SetLeft(itemImage, item.X);
                 Canvas.SetTop(itemImage, item.Y);
+
+                RotateTransform rotateTransform = new RotateTransform(item.RotateAngle);
+                itemImage.LayoutTransform = rotateTransform;
             }
         }
 
@@ -88,10 +91,14 @@ namespace HouseOrdering.Gui.UserControls
             {
                 if (image.Tag != null)
                 {
-                    if (canFloor.InputHitTest(e.GetPosition(canFloor)).Equals(image))
+                    IInputElement element = canFloor.InputHitTest(e.GetPosition(canFloor));
+                    if (element != null)
                     {
-                        item = image.Tag as ItemBase;
-                        break;
+                        if (element.Equals(image))
+                        {
+                            item = image.Tag as ItemBase;
+                            break;
+                        }
                     }
                 }
             }

@@ -33,12 +33,16 @@
             <Label Grid.Row="1" Grid.Column="0" Content="G"/>
             <Label Grid.Row="2" Grid.Column="0" Content="B"/>
             <Label Grid.Row="3" Grid.Column="0" Content="A"/>
-            <Slider Grid.Row="0" Grid.Column="1" x:Name="sliderR" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1" ValueChanged="Slider_ValueChanged"/>
-            <Slider Grid.Row="1" Grid.Column="1" x:Name="sliderG" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1" ValueChanged="Slider_ValueChanged"/>
-            <Slider Grid.Row="2" Grid.Column="1" x:Name="sliderB" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1" ValueChanged="Slider_ValueChanged"/>
-            <Slider Grid.Row="3" Grid.Column="1" x:Name="sliderA" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1" ValueChanged="Slider_ValueChanged"/>
+            <Slider Grid.Row="0" Grid.Column="1" x:Name="sliderR" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1"/>
+            <Slider Grid.Row="1" Grid.Column="1" x:Name="sliderG" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1"/>
+            <Slider Grid.Row="2" Grid.Column="1" x:Name="sliderB" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1"/>
+            <Slider Grid.Row="3" Grid.Column="1" x:Name="sliderA" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1"/>
         </Grid>
-        <TextBox Grid.Row="0" Grid.Column="2" x:Name="tbName" Width="190" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="tbName_TextChanged"/>
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
+            <TextBox x:Name="tbName" Width="190" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="tbName_TextChanged"/>
+            <TextBox x:Name="tbAngle" Width="50" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" PreviewTextInput="tbAngle_PreviewTextInput" TextChanged="tbAngle_TextChanged"/>
+        </StackPanel>
+        
         <DockPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Margin="5">
             <Image x:Name="imgPreview" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </DockPanel>

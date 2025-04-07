@@ -17,7 +17,7 @@
             <ColumnDefinition Width="255"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" Background="Gray" >
             <Button x:Name="btnNewProject" Margin="5" Width="40" Height="40" Click="btnNewProject_Click">
                 <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Icons/newproject.ico" />
                 <Button.Resources>
@@ -25,6 +25,9 @@
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
+                <Button.ToolTip>
+                    <Label Content="New project"/>
+                </Button.ToolTip>
             </Button>
             <Button x:Name="btnSave" Margin="5" Width="40" Height="40" Click="btnSave_Click">
                 <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Icons/save.ico" />
@@ -33,6 +36,9 @@
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
+                <Button.ToolTip>
+                    <Label Content="Save project"/>
+                </Button.ToolTip>
             </Button>
             <Button x:Name="btnOpen" Margin="5" Width="40" Height="40" Click="btnOpen_Click">
                 <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Icons/open.ico" />
@@ -41,16 +47,19 @@
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
+                <Button.ToolTip>
+                    <Label Content="Open project"/>
+                </Button.ToolTip>
             </Button>
         </StackPanel>
-        <Grid Grid.Row="1" Grid.Column="0" Margin="5">
+        <Grid Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" x:Name="tbProjectName"  VerticalAlignment="Center" MouseDown="tbProjectName_MouseDown" MouseEnter="tbProjectName_MouseEnter" MouseLeave="tbProjectName_MouseLeave"/>
-            <ListBox Grid.Row="1" x:Name="lbFloors" Margin="0,5" SelectionChanged="lbFloors_SelectionChanged">
+            <TextBlock Grid.Row="0" x:Name="tbProjectName"  VerticalAlignment="Center" MouseDown="tbProjectName_MouseDown" Padding="5" MouseEnter="tbProjectName_MouseEnter" TextAlignment="Center" MouseLeave="tbProjectName_MouseLeave" Background="DarkGray"/>
+            <ListBox Grid.Row="1" x:Name="lbFloors" Margin="5,5,0,5" SelectionChanged="lbFloors_SelectionChanged">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -69,10 +78,17 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ListBox>
-            <Button Grid.Row="2" x:Name="addFloor" Content="AddFloor" Click="addFloor_Click"/>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" x:Name="btnAddFloor" Content="Add" Click="btnAddFloor_Click" Margin="5,0,5,5"/>
+                <Button Grid.Column="1" x:Name="btnCloneFloor" Content="Clone" Click="btnCloneFloor_Click" Margin="0,0,0,5"/>
+            </Grid>
         </Grid>
-        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,5,5" BorderThickness="{Binding BorderThickness, ElementName=lbFloors}" BorderBrush="{Binding BorderBrush, ElementName=lbFloors}">
-            <DockPanel x:Name="pnlFloor" Margin="5"/>
+        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Margin="0,5,5,5" BorderThickness="{Binding BorderThickness, ElementName=lbFloors}">
+            <DockPanel x:Name="pnlFloor"/>
         </Border>
     </Grid>
 </Window>

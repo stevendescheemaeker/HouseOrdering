@@ -8,6 +8,7 @@ namespace HouseOrdering.Data
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public double RotateAngle { get; set; }
         public bool Locked { get; set; }
         public bool Dragging { get; set; }
 
@@ -21,6 +22,7 @@ namespace HouseOrdering.Data
         {
             X = 0;
             Y = 0;
+            RotateAngle = 0;
 
             Locked = false;
             Dragging = false;

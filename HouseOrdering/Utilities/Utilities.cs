@@ -9,6 +9,28 @@ namespace HouseOrdering.Utilities
 {
     public static class Utilities
     {
+        public static T CloneObject<T>(T o)
+        {
+            T result = default(T);
+
+            try
+            {
+                MemoryStream stream = new MemoryStream();
+                BinaryFormatter bf = new BinaryFormatter();
+                bf.Serialize(stream, o);
+                stream.Position = 0;
+                result = (T)bf.Deserialize(stream);
+                stream.Close();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Trace.WriteLine(e.Message);
+                System.Diagnostics.Trace.WriteLine(e.StackTrace);
+            }
+
+            return (result);
+        }
+
         public static bool GetObjectFromFile<T>(String path, out T o)
         {
             bool result = true;

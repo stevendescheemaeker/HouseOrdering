@@ -152,5 +152,34 @@ namespace HouseOrdering.Gui.Windows
                 OpenProject(mProject);
             }
         }
+
+        void btnCloneFloor_Click(object sender, RoutedEventArgs e)
+        {
+            if (mProject == null)
+                return;
+
+            if (lbFloors.SelectedItem == null)
+                return;
+
+            mProject.Plans.Add(Utilities.Utilities.CloneObject<FloorPlan>(lbFloors.SelectedItem as FloorPlan));
+            OpenProject(mProject);
+        }
+
+        void btnAddFloor_Click(object sender, RoutedEventArgs e)
+        {
+            if (mProject != null)
+            {
+                FloorPlan floorPlan = new FloorPlan();
+                Floor floor = new Floor();
+                floorPlan.Floor = floor;
+                mProject.Plans.Add(floorPlan);
+
+                WindowItemBasePolygon plan = new WindowItemBasePolygon(floor);
+                plan.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                plan.ShowDialog();
+
+                OpenProject(mProject);
+            }
+        }
     }
 }

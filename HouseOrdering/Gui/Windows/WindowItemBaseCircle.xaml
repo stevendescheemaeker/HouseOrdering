@@ -34,10 +34,10 @@
             <Label Grid.Row="1" Grid.Column="0" Content="G"/>
             <Label Grid.Row="2" Grid.Column="0" Content="B"/>
             <Label Grid.Row="3" Grid.Column="0" Content="A"/>
-            <Slider Grid.Row="0" Grid.Column="1" x:Name="sliderR" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1" ValueChanged="Slider_ValueChanged"/>
-            <Slider Grid.Row="1" Grid.Column="1" x:Name="sliderG" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1" ValueChanged="Slider_ValueChanged"/>
-            <Slider Grid.Row="2" Grid.Column="1" x:Name="sliderB" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1" ValueChanged="Slider_ValueChanged"/>
-            <Slider Grid.Row="3" Grid.Column="1" x:Name="sliderA" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1" ValueChanged="Slider_ValueChanged"/>
+            <Slider Grid.Row="0" Grid.Column="1" x:Name="sliderR" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1"/>
+            <Slider Grid.Row="1" Grid.Column="1" x:Name="sliderG" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1"/>
+            <Slider Grid.Row="2" Grid.Column="1" x:Name="sliderB" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1"/>
+            <Slider Grid.Row="3" Grid.Column="1" x:Name="sliderA" Minimum="0" Maximum="255" Width="255" Margin="5" Interval="1"/>
         </Grid>
         <DockPanel Height="400" Grid.Row="1" Grid.Column="1" Margin="5">
             <Image x:Name="imgPreview" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top"/>

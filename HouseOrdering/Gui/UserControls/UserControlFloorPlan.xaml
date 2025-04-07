@@ -3,16 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:HouseOrdering.Gui.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:local="clr-namespace:HouseOrdering.Gui.UserControls">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
-        <Canvas Grid.Row="0" x:Name="canFloor" Background="White" MouseMove="canFloor_MouseMove" PreviewMouseLeftButtonDown="canFloor_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="canFloor_PreviewMouseLeftButtonUp" PreviewMouseRightButtonDown="canFloor_PreviewMouseRightButtonDown"/>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Background="#D3D3D3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Canvas Margin="5" Grid.Column="0" x:Name="canFloor" Background="White" MouseMove="canFloor_MouseMove" PreviewMouseLeftButtonDown="canFloor_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="canFloor_PreviewMouseLeftButtonUp" PreviewMouseRightButtonDown="canFloor_PreviewMouseRightButtonDown"/>
+        <StackPanel Grid.Column="1" Background="DarkGray">
             <Button x:Name="addPolygon" Content="Add polygon" Click="addPolygon_Click" Margin="5"/>
             <Button x:Name="addCircle" Content="Add circle" Click="addCircle_Click" Margin="5"/>
         </StackPanel>
